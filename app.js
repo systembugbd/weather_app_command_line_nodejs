@@ -1,5 +1,5 @@
 // const request = require('request')
-const { geocode }   = require('./utils/utils');
+const { geocode }   = require('./utils/geocode');
 const { forecast }  = require('./utils/forecast')
 const chalk         = require('chalk')
 
@@ -12,18 +12,18 @@ const chalk         = require('chalk')
 // &callback=MY_CALLBACK
 
 const place = process.argv[2]
-
+ 
 if(place){
 
-    geocode(place, (err, data) => {
+    geocode(place, (err, {latitude, longitude, location}) => {
         if(err){
             console.log(err)
         }else{
-            forecast(data.latitude, data.longitude, data.location, (err, res) =>{
+            forecast(latitude, longitude, location, (err, resString) =>{
                 if(err){
                     console.log(err)
                 }else{
-                console.log(res)
+                    console.log(resString)
                 }
             })
         }
